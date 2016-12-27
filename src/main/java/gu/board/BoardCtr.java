@@ -157,6 +157,11 @@ public class BoardCtr {
             return "board/BoardGroupFail";
         }
         
+        
+        
+        
+        
+        
         modelMap.addAttribute("boardInfo", boardInfo);
         modelMap.addAttribute("listview", listview);
         modelMap.addAttribute("replylist", replylist);
