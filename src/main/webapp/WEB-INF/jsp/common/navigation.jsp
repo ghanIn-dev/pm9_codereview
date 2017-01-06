@@ -126,6 +126,10 @@
                              <li>
                                  <a href="adCodeList"><i class="fa fa-gear fa-fw"></i> <s:message code="memu.code"/></a>
                              </li>
+                             
+                             <li>
+                                 <a href="adTestList"><i class="fa fa-gear fa-fw"></i> <s:message code="memu.test"/></a>
+                             </li>
 	                	</c:if>	        
                     </ul>
                 </div>

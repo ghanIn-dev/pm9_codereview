@@ -26,7 +26,7 @@ public class CodeCtr {
     @RequestMapping(value = "/adCodeList")
     public String codeList(HttpServletRequest request, SearchVO searchVO, ModelMap modelMap) {
         searchVO.pageCalculate( codeSvc.selectCodeCount(searchVO) ); // startRow, endRow
-        List<?> listview  = codeSvc.selectCodeList(searchVO);
+        List<?> listview  = codeSvc.selectCodeList(searchVO); 
         
         modelMap.addAttribute("searchVO", searchVO);
         modelMap.addAttribute("listview", listview);

@@ -210,8 +210,7 @@ function fn_addBoardLike(brdno){
                     <c:if test="${listview.size()>0}">
 		                <div class="panel-footer">
 		                	<c:forEach var="listview" items="${listview}" varStatus="status">	
-		           				<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
-								<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
+		           				<a href="unzip?realname=<c:out value="${listview.realname}"/>"><c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
 							</c:forEach>
 	                     </div>
                     </c:if>
@@ -226,7 +225,7 @@ function fn_addBoardLike(brdno){
 	                <button id="boardLikeBtn" class="btn btn-outline btn-primary pull-right" onclick="fn_addBoardLike(<c:out value="${boardInfo.brdno}"/>)" ><i class="fa fa-thumbs-o-up fa-fw"></i> <s:message code="common.like"/></button>
 				</c:if>
 							                               
-				<p>&nbsp;</p>
+				<p> </p>
 				<input type="hidden" id="brdno" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 
 				
 				<c:if test="${bgInfo.bgreply=='Y'}">
@@ -309,3 +308,4 @@ function fn_addBoardLike(brdno){
 </body>
 
 </html>
+"

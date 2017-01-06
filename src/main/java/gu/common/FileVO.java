@@ -1,7 +1,8 @@
 package gu.common;
 
 public class FileVO {
-    private Integer fileno; 
+
+	private Integer fileno; 
     private String parentPK;
     private String filename;
     private String realname;

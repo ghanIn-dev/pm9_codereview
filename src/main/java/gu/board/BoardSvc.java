@@ -174,5 +174,12 @@ public class BoardSvc {
         sqlSession.delete("deleteBoardReply", param);
         
         return true;
-    }    
+    }
+
+	public String selectBoardFileName(String param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("selectBoardFileName", param);
+	}
+
+
 }

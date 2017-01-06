@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+    <sql id="includeTest">
+        WHERE 1=1
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectTestCount" resultType="Integer" parameterType="gu.common.SearchVO">
+        SELECT COUNT(*)
+          FROM COM_TEST CC
+         <include refid="includeTest"/>
+    </select> 
+    
+    <select id="selectTestList" resultType="gu.admin.test.TestVO" parameterType="gu.common.SearchVO">
+        SELECT CLASSNO, TESTCD, TESTNM
+          FROM COM_TEST TB
+         <include refid="includeTest"/>
+         ORDER BY CLASSNO, TESTCD 
+         <if test="rowStart != null">
+             LIMIT ${rowStart-1}, 10
+         </if>
+    </select> 
+        
+    <insert id="insertTest" parameterType="gu.admin.test.TestVO" >
+        INSERT INTO COM_TEST(CLASSNO, TESTCD, TESTNM)
+        VALUES (#{classno}, #{testcd}, #{testnm})
+    </insert>
+    
+    <update id="updateTest" parameterType="gu.admin.test.TestVO">
+        UPDATE COM_TEST
+           SET TESTNM=#{testnm}
+         WHERE CLASSNO=#{classno} AND TESTCD=#{testcd}
+    </update> 
+        
+    <select id="selectTestOne" parameterType="gu.admin.test.TestVO" resultType="gu.admin.test.TestVO">
+        SELECT CLASSNO, TESTCD, TESTNM
+          FROM COM_TEST CC
+         WHERE CLASSNO=#{classno} AND TESTCD=#{testcd}
+    </select> 
+    
+    <delete id="deleteTestOne" parameterType="gu.admin.test.TestVO">
+        DELETE FROM COM_TEST
+         WHERE CLASSNO=#{classno} AND TESTCD=#{testcd}
+    </delete> 
+    
+    <insert id="insertBoard4File" parameterType="gu.common.FileVO" >
+        INSERT INTO TBL_BOARDFILETEST (CLASSNO, FILENAME, REALNAME, FILESIZE)
+        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize})
+	</insert>
+	
+	
+	
+	<select id="selectTestFileList" resultType="gu.common.FileVO" parameterType="String">
+		SELECT FILENO, FILENAME, REALNAME, FILESIZE
+		FROM TBL_BOARDFILETEST
+		WHERE CLASSNO=#{classno}
+		ORDER BY FILENO DESC
+	</select>
+
+
+</mapper>
+

@@ -2,6 +2,7 @@ package gu.board;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,11 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import gu.board.BoardSvc;
 import gu.admin.board.BoardGroupSvc;
 import gu.admin.board.BoardGroupVO;
-import gu.board.BoardReplyVO;
-import gu.board.BoardVO;
 import gu.common.Field3VO;
 import gu.common.FileUtil;
 import gu.common.FileVO;
@@ -123,12 +121,15 @@ public class BoardCtr {
             }
         }
         
+        String brdno = request.getParameter("brdno");
         String[] fileno = request.getParameterValues("fileno");
         FileUtil fs = new FileUtil();
         List<FileVO> filelist = fs.saveAllFiles(boardInfo.getUploadfile());
-
+        
         boardSvc.insertBoard(boardInfo, filelist, fileno);
 
+
+        
         return "redirect:/boardList?bgno=" + boardInfo.getBgno();
     }
 
@@ -156,11 +157,8 @@ public class BoardCtr {
         if (bgInfo == null) {
             return "board/BoardGroupFail";
         }
-        
-        
-        
-        
-        
+
+
         
         modelMap.addAttribute("boardInfo", boardInfo);
         modelMap.addAttribute("listview", listview);
@@ -274,5 +272,32 @@ public class BoardCtr {
             UtilEtc.responseJsonValue(response, "OK");
         }
     }
+    
+/*    ===================================================================== 
+    *//**
+     * 압축풀기     
+     * @return 
+     *//*
+    @RequestMapping(value = "/unzip")
+    public String unzipView(HttpServletRequest request, ModelMap map) {
+
+     
+        Unzip unzip = new Unzip();
+        String filename = request.getParameter("realname");
+        		try {
+        			FileList dirList = unzip.unzip("d:\\workspace\\fileupload\\2016\\"+filename);
+        			map.addAttribute("dirList",dirList);
+       			
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        		
+        		
+        		
+        		return "board/boardFileList";
+    }
+        
+    ===================================================================== */
    
 }

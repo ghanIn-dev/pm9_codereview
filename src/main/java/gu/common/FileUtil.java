@@ -63,6 +63,7 @@ public class FileUtil {
             filedo.setRealname(newName);
             filedo.setFilesize(uploadfile.getSize());
             filelist.add(filedo);
+                                   
         }
         return filelist;
     }     
