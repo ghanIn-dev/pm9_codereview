@@ -32,22 +32,22 @@ public class BoardSvc {
      * 게시판 정보 (그룹).
      */
     public BoardGroupVO selectBoardGroupOne4Used(String param) {
-        return sqlSession.selectOne("selectBoardGroupOne4Used", param);
+        return sqlSession.selectOne("board.selectBoardGroupOne4Used", param);
     }
     
     /** ------------------------------------------
      * 게시판.
      */
     public Integer selectBoardCount(BoardSearchVO param) {
-        return sqlSession.selectOne("selectBoardCount", param);
+        return sqlSession.selectOne("board.selectBoardCount", param);
     }
     
     public List<?> selectBoardList(BoardSearchVO param) {
-        return sqlSession.selectList("selectBoardList", param);
+        return sqlSession.selectList("board.selectBoardList", param);
     }
     
     public List<?> selectNoticeList(BoardSearchVO param) {
-        return sqlSession.selectList("selectNoticeList", param);
+        return sqlSession.selectList("board.selectNoticeList", param);
     }
     
     /**
@@ -60,20 +60,20 @@ public class BoardSvc {
         
         try {
             if (param.getBrdno() == null || "".equals(param.getBrdno())) {
-                 sqlSession.insert("insertBoard", param);
+                 sqlSession.insert("board.insertBoard", param);
             } else {
-                sqlSession.update("updateBoard", param);
+                sqlSession.update("board.updateBoard", param);
             }
             
             if (fileno != null) {
                 HashMap<String, String[]> fparam = new HashMap<String, String[]>();
                 fparam.put("fileno", fileno);
-                sqlSession.insert("deleteBoardFile", fparam);
+                sqlSession.insert("board.deleteBoardFile", fparam);
             }
             
             for (FileVO f : filelist) {
                 f.setParentPK(param.getBrdno());
-                sqlSession.insert("insertBoardFile", f);
+                sqlSession.insert("board.insertBoardFile", f);
             }
             txManager.commit(status);
         } catch (TransactionException ex) {
@@ -83,22 +83,22 @@ public class BoardSvc {
     }
  
     public BoardVO selectBoardOne(Field3VO param) {
-        return sqlSession.selectOne("selectBoardOne", param);
+        return sqlSession.selectOne("board.selectBoardOne", param);
     }
 
     /**
      * 게시판 수정/삭제 권한 확인. 
      */
     public String selectBoardAuthChk(BoardVO param) {
-        return sqlSession.selectOne("selectBoardAuthChk", param);
+        return sqlSession.selectOne("board.selectBoardAuthChk", param);
     }
     
     public void updateBoardRead(Field3VO param) {
-        sqlSession.insert("updateBoardRead", param);
+        sqlSession.insert("board.updateBoardRead", param);
     }
     
     public void deleteBoardOne(String param) {
-        sqlSession.delete("deleteBoardOne", param);
+        sqlSession.delete("board.deleteBoardOne", param);
     }
 
     /**
@@ -110,8 +110,8 @@ public class BoardSvc {
         TransactionStatus status = txManager.getTransaction(def);
         
         try {
-            sqlSession.insert("insertBoardLike", param);
-            sqlSession.update("updateBoard4Like", param);
+            sqlSession.insert("board.insertBoardLike", param);
+            sqlSession.update("board.updateBoard4Like", param);
             
             txManager.commit(status);
         } catch (TransactionException ex) {
@@ -121,12 +121,12 @@ public class BoardSvc {
     }
 
     public List<?> selectBoardFileList(String param) {
-        return sqlSession.selectList("selectBoardFileList", param);
+        return sqlSession.selectList("board.selectBoardFileList", param);
     }
     
     /* =============================================================== */
     public List<?> selectBoardReplyList(String param) {
-        return sqlSession.selectList("selectBoardReplyList", param);
+        return sqlSession.selectList("board.selectBoardReplyList", param);
     }
     
     /**
@@ -135,27 +135,27 @@ public class BoardSvc {
     public BoardReplyVO insertBoardReply(BoardReplyVO param) {
         if (param.getReno() == null || "".equals(param.getReno())) {
             if (param.getReparent() != null) {
-                BoardReplyVO replyInfo = sqlSession.selectOne("selectBoardReplyParent", param.getReparent());
+                BoardReplyVO replyInfo = sqlSession.selectOne("board.selectBoardReplyParent", param.getReparent());
                 param.setRedepth(replyInfo.getRedepth());
                 param.setReorder(replyInfo.getReorder() + 1);
-                sqlSession.selectOne("updateBoardReplyOrder", replyInfo);
+                sqlSession.selectOne("board.updateBoardReplyOrder", replyInfo);
             } else {
-                Integer reorder = sqlSession.selectOne("selectBoardReplyMaxOrder", param.getBrdno());
+                Integer reorder = sqlSession.selectOne("board.selectBoardReplyMaxOrder", param.getBrdno());
                 param.setReorder(reorder);
             }
             
-            sqlSession.insert("insertBoardReply", param);
+            sqlSession.insert("board.insertBoardReply", param);
         } else {
-            sqlSession.insert("updateBoardReply", param);
+            sqlSession.insert("board.updateBoardReply", param);
         }
-        return sqlSession.selectOne("selectBoardReplyOne", param.getReno());
+        return sqlSession.selectOne("board.selectBoardReplyOne", param.getReno());
     }   
     
     /**
      * 댓글 수정/삭제 권한 확인. 
      */
     public String selectBoardReplyAuthChk(BoardReplyVO param) {
-        return sqlSession.selectOne("selectBoardReplyAuthChk", param);
+        return sqlSession.selectOne("board.selectBoardReplyAuthChk", param);
     }
     
     /**
@@ -163,22 +163,22 @@ public class BoardSvc {
      * 자식 댓글이 있으면 삭제 안됨. 
      */
     public boolean deleteBoardReply(String param) {
-        Integer cnt = sqlSession.selectOne("selectBoardReplyChild", param);
+        Integer cnt = sqlSession.selectOne("board.selectBoardReplyChild", param);
         
         if ( cnt > 0) {
             return false;
         }
         
-        sqlSession.update("updateBoardReplyOrder4Delete", param);
+        sqlSession.update("board.updateBoardReplyOrder4Delete", param);
         
-        sqlSession.delete("deleteBoardReply", param);
+        sqlSession.delete("board.deleteBoardReply", param);
         
         return true;
     }
 
 	public String selectBoardFileName(String param) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("selectBoardFileName", param);
+		return sqlSession.selectOne("board.selectBoardFileName", param);
 	}
 
 
