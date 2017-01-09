@@ -2,6 +2,7 @@ package gu.admin.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.FileNameMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,21 +63,25 @@ public class TestCtr {
     @RequestMapping(value = "/adTestSave")
     public String testSave(HttpServletRequest request, TestVO testInfo, ModelMap modelMap) {
     	String testFormType = request.getParameter("testFormType");
-    	String filePath = LocaleMessage.getMessage("info.filePath");
+    	String filePath = LocaleMessage.getMessage("info.filePath"); // 파일 업로드 위치
     	  	
         FileUtil fs = new FileUtil(); // 파일저장
         List<FileVO> filelist = fs.saveAllFiles(testInfo.getUploadfile());
-	   
+        Unzip unzip = new Unzip();	    
+        
+        	   
         for (int i=0; i<filelist.size(); i ++) {
         	FileVO fvo = (FileVO)filelist.get(i);
-	        String realpath =fs.getRealPath(filePath, fvo.getRealname());            
-	        File zipFile = new File(realpath+fvo.getRealname());
+	        String realpath = fs.getRealPath(filePath, fvo.getRealname());  // 파일 업로드 위치 + 현재 년도
+	        String filenamepath = realpath+fvo.getRealname(); // 파일 업로드 위치 + 현재 년도 + realname
+	        String realname = fvo.getRealname();
+	        File zipFile = new File(filenamepath);
 	        File targetDir = new File(realpath);	        
 	        boolean fileNameToLowerCase=false;
 	        
-	        Unzip unzip = new Unzip();	    
 	        try {
-				unzip.unzipTarget(zipFile, targetDir, fileNameToLowerCase);
+				unzip.unzipTarget(zipFile, targetDir, fileNameToLowerCase, realname);
+				unzip.subDirList(filenamepath+"_folder");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -84,12 +89,12 @@ public class TestCtr {
 
         }
         
-/*        sublist();
+  /*      unzip.subDirList(filenamepath+"_folder");
         
         for (int i=0; i<aaaalist.size(); i ++) {
         	insert dfds
-        }*/
-        
+        }
+*/
         
     	 if (!"U".equals(testFormType)) { // insert 
     		 TestVO cvo = testSvc.selectTestOne(testInfo);

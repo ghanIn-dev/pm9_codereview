@@ -1,19 +1,19 @@
-import org.junit.Test;
+import java.io.File;
 
-import gu.common.FileUtil;
+import org.junit.Test;
 
 public class test2 {
 
 	@Test
 	public void test() {
-		String filePath ="d:\\workspace\\fileupload\\";
+		String filePath ="C:/Users/간석현/Desktop";
 	
-		FileUtil fs = new FileUtil();
-				
-        String realpath =filePath+"201701050657198544";
 
+        File targetDir = new File(filePath);
         
-        System.out.println(realpath);
+        
+        new File(targetDir, "test").mkdir();
+        
 	}
 
 }
