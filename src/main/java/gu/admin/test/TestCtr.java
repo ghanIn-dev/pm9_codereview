@@ -1,5 +1,7 @@
 package gu.admin.test;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.FileNameMap;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import gu.common.FileDirStrVO;
 import gu.common.FileUtil;
 import gu.common.FileVO;
 import gu.common.LocaleMessage;
@@ -80,8 +83,15 @@ public class TestCtr {
 	        boolean fileNameToLowerCase=false;
 	        
 	        try {
-				unzip.unzipTarget(zipFile, targetDir, fileNameToLowerCase, realname);
-				unzip.subDirList(filenamepath+"_folder");
+				unzip.unzipTarget(zipFile, targetDir, fileNameToLowerCase, realname);				
+				List<FileDirStrVO> listVO = unzip.subDirList(filenamepath+"_folder");
+				
+				for (int k=0; k<listVO.size(); k ++) {
+					FileDirStrVO listDo = (FileDirStrVO)listVO.get(k);
+					testSvc.insertFileDirVO(listDo);
+
+				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -91,9 +101,6 @@ public class TestCtr {
         
   /*      unzip.subDirList(filenamepath+"_folder");
         
-        for (int i=0; i<aaaalist.size(); i ++) {
-        	insert dfds
-        }
 */
         
     	 if (!"U".equals(testFormType)) { // insert 
@@ -116,15 +123,28 @@ public class TestCtr {
         
     	String classno = testVO.getClassno();
     	
+    	String depth=request.getParameter("depth");
+    	String parentId=request.getParameter("parentId");
+    	
         TestVO testInfo = testSvc.selectTestOne(testVO);
         List<?> listview = testSvc.selectTestFileList(classno);
+        List<?> fileStr = testSvc.selectTestFileStr(classno);
+        
+        
 
         modelMap.addAttribute("testInfo", testInfo);
         modelMap.addAttribute("listview", listview);
+        modelMap.addAttribute("fileStr", fileStr);
+        
+        modelMap.addAttribute("depth", depth);
+        modelMap.addAttribute("parentId", parentId);
+        
         
         return "admin/test/TestRead";
     }
     
+
+      
     /**
      * 공통 코드 삭제.
      */

@@ -13,6 +13,7 @@ import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import gu.common.FileDirStrVO;
 import gu.common.FileVO;
 import gu.common.SearchVO;
 
@@ -73,6 +74,16 @@ public class TestSvc {
 	public List<?> selectTestFileList(String param) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("selectTestFileList", param);
+	}
+
+	public int insertFileDirVO(FileDirStrVO param) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("insertFileDirStrVO", param);
+	}
+
+	public List<?> selectTestFileStr(String param) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectTestFileStr", param);
 	}
 
 }

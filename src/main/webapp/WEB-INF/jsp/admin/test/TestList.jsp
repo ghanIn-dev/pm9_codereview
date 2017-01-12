@@ -79,6 +79,8 @@ function fn_formSubmit(){
 						<c:url var="link" value="adTestRead">
 							<c:param name="classno" value="${listview.classno}" />
 							<c:param name="testcd" value="${listview.testcd}" />
+							<c:param name="depth" value="0" />
+							<c:param name="parentId" value="0" />
 						</c:url>
 					
 						<div class="listBody">

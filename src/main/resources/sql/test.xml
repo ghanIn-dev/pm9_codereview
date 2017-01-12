@@ -65,5 +65,20 @@
 	</select>
 
 
+	<insert id="insertFileDirStrVO" parameterType="gu.common.FileDirStrVO" >
+        INSERT INTO TBL_FILELIST (ID, SUBDIR, DEPTH, FILEFLAG, PARENTID, NAME, PARENTNAME)
+        VALUES (#{id}, #{subDir}, #{depth}, #{fileflag}, #{parentId}, #{name}, #{parentName})
+	</insert>
+
+
+
+	<select id="selectTestFileStr" resultType="gu.common.FileDirStrVO" parameterType="String">
+		SELECT NAME, DEPTH, FILEFLAG, PARENTID, ID
+		FROM TBL_FILELIST
+		WHERE CLASSNO=#{classno}
+		ORDER BY ID ASC
+	</select>
+
+
 </mapper>
 

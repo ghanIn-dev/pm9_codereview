@@ -2,6 +2,9 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +33,15 @@
     <script src="css/sb-admin/sb-admin-2.js"></script>
 	<script src="js/project9.js"></script>    
 <script>
+
+function clickDir(depth, parent)  {
+	
+	
+}
+
+function clickFile() {
+	
+}
 </script>    
 </head>
 
@@ -65,15 +77,48 @@
 	                        </div>
 	                    </div>
 	                    
-	                    <tr>
-    <td>첨부</td> 
-    <td>
-        <c:forEach var="listview" items="${listview}" varStatus="status">    
+	<tr>
+   	 <td>첨부</td> 
+    	<td>
+       	 <c:forEach var="listview" items="${listview}" varStatus="status">    
             <a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname}"/>"> 
             <c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
         </c:forEach>                    
-    </td> 
+   	 </td> 
 	</tr>
+	
+<table class="table table-bordered">
+	<thead>
+        <tr>
+       
+        <th>FileList</th>
+            
+        </tr>
+    </thead>
+    
+
+	<tbody>
+       		 <c:forEach var="fileStr" items="${fileStr}" varStatus="status">     		
+        		<tr>
+        			<c:if test="${fileStr.depth eq depth and fileStr.parentId eq parentId}">
+						<c:choose>
+						    <c:when test="${fileStr.fileflag eq '1'}">
+			        			 <td class="text-center"> <i class="fa fa-folder"></i>
+			        			 <a href="adTestRead?depth=<c:out value="${fileStr.depth+1}"/>&parentId=<c:out value="${fileStr.id}"/>&classno=<c:out value="${testInfo.classno}"/>&testcd=<c:out value="${testInfo.testcd}"/>">${fileStr.name}</a>
+			        			 </td>
+						    </c:when>				
+						    <c:when test="${fileStr.fileflag eq '0'}">
+			        			<td class="text-center"> <i class="fa fa-file-text-o"></i>
+			        			<a href="adTestFileView?">${fileStr.name}</a>
+			        			</td>
+						    </c:when>
+						</c:choose>
+					</c:if>	
+			   </tr>    
+        	</c:forEach>                    
+   	
+	</tbody>
+</table>	
 
 
 	                    
@@ -91,3 +136,6 @@
 </body>
 
 </html>
+
+
+
