@@ -75,7 +75,7 @@ public class Unzip {
     }
     
     
-	public List<FileDirStrVO> subDirList(String source){
+	public List<FileDirStrVO> subDirList(String source, String classno){
 		File dir = new File(source); 
 		File[] fileList = dir.listFiles();
 			
@@ -83,16 +83,18 @@ public class Unzip {
 			for(int i = 0 ; i < fileList.length ; i++){
 				File file = fileList[i];						
 				FileDirStrVO strDo = setPara(file.getPath());
+				strDo.setClassno(classno);
 				
 				if(file.isFile()){ // 파일이 있다면 파일 이름 출력 System.out.println("\t 파일 이름 = " + file.getName());
-					strDo.setFileflag(0);		
+					strDo.setFileflag(0);
+					strDo.setFilePath(file.getPath());
 					
 					 
 				}else if(file.isDirectory()){ // 서브디렉토리가 존재하면 재귀적 방법으로 다시 탐색 System.out.println("디렉토리 이름 = " + file.getName()); 
 					strDo.setFileflag(1);
 					
 					
-					subDirList(file.getCanonicalPath().toString()); 
+					subDirList(file.getCanonicalPath().toString(), classno); 
 				}
 				
 				listVO.add(strDo);

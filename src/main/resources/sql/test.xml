@@ -55,8 +55,7 @@
         VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize})
 	</insert>
 	
-	
-	
+		
 	<select id="selectTestFileList" resultType="gu.common.FileVO" parameterType="String">
 		SELECT FILENO, FILENAME, REALNAME, FILESIZE
 		FROM TBL_BOARDFILETEST
@@ -66,19 +65,25 @@
 
 
 	<insert id="insertFileDirStrVO" parameterType="gu.common.FileDirStrVO" >
-        INSERT INTO TBL_FILELIST (ID, SUBDIR, DEPTH, FILEFLAG, PARENTID, NAME, PARENTNAME)
-        VALUES (#{id}, #{subDir}, #{depth}, #{fileflag}, #{parentId}, #{name}, #{parentName})
+        INSERT INTO TBL_FILELIST (ID, SUBDIR, DEPTH, FILEFLAG, PARENTID, NAME, PARENTNAME, CLASSNO, FILEPATH)
+        VALUES (#{id}, #{subDir}, #{depth}, #{fileflag}, #{parentId}, #{name}, #{parentName}, #{classno}, #{filePath})
 	</insert>
 
 
-
 	<select id="selectTestFileStr" resultType="gu.common.FileDirStrVO" parameterType="String">
-		SELECT NAME, DEPTH, FILEFLAG, PARENTID, ID
+		SELECT NAME, DEPTH, FILEFLAG, PARENTID, ID, FILEPATH
 		FROM TBL_FILELIST
 		WHERE CLASSNO=#{classno}
-		ORDER BY ID ASC
+		ORDER BY FILEFLAG DESC, NAME ASC
 	</select>
 
+
+	<update id="updateParentId" parameterType="gu.admin.test.TestVO">
+		UPDATE TBL_FILELIST C
+		 INNER JOIN (SELECT * FROM TBL_FILELIST WHERE CLASSNO=#{classno})AS D
+		SET C.PARENTID=D.ID 
+		WHERE C.CLASSNO=#{classno} AND D.NAME=C.PARENTNAME;
+    </update> 
 
 </mapper>
 

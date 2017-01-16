@@ -66,7 +66,9 @@ public class TestCtr {
     @RequestMapping(value = "/adTestSave")
     public String testSave(HttpServletRequest request, TestVO testInfo, ModelMap modelMap) {
     	String testFormType = request.getParameter("testFormType");
-    	String filePath = LocaleMessage.getMessage("info.filePath"); // 파일 업로드 위치
+    	String filePath = LocaleMessage.getMessage("info.filePath");// 파일 업로드 위치
+    	String classno = testInfo.getClassno();
+    	
     	  	
         FileUtil fs = new FileUtil(); // 파일저장
         List<FileVO> filelist = fs.saveAllFiles(testInfo.getUploadfile());
@@ -84,7 +86,7 @@ public class TestCtr {
 	        
 	        try {
 				unzip.unzipTarget(zipFile, targetDir, fileNameToLowerCase, realname);				
-				List<FileDirStrVO> listVO = unzip.subDirList(filenamepath+"_folder");
+				List<FileDirStrVO> listVO = unzip.subDirList(filenamepath+"_folder", classno);
 				
 				for (int k=0; k<listVO.size(); k ++) {
 					FileDirStrVO listDo = (FileDirStrVO)listVO.get(k);
@@ -111,6 +113,7 @@ public class TestCtr {
     		 }
     	 }
         testSvc.insertTest(testFormType,testInfo ,filelist); 
+        testSvc.updateParentId(classno);
 
         return "redirect:/adTestList";
     }
@@ -141,6 +144,18 @@ public class TestCtr {
         
         
         return "admin/test/TestRead";
+    }
+    
+    /**
+     * 공통 코드 파일읽기.
+     */
+    @RequestMapping(value = "/adTestFileView")
+    public String testFileRead(HttpServletRequest request, ModelMap modelMap) {
+    	
+        String filePath = request.getParameter("path");
+        modelMap.addAttribute("filePath",filePath);
+        
+        return "admin/test/TestFileView";
     }
     
 

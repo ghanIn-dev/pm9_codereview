@@ -86,4 +86,11 @@ public class TestSvc {
 		return sqlSession.selectList("selectTestFileStr", param);
 	}
 
+	public int updateParentId(String param) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("updateParentId", param);
+	}
+
+
+
 }

@@ -109,14 +109,13 @@ function clickFile() {
 						    </c:when>				
 						    <c:when test="${fileStr.fileflag eq '0'}">
 			        			<td class="text-center"> <i class="fa fa-file-text-o"></i>
-			        			<a href="adTestFileView?">${fileStr.name}</a>
+			        			<a href="adTestFileView?path=<c:out value="${fileStr.filePath}"/>">${fileStr.name}</a>
 			        			</td>
 						    </c:when>
 						</c:choose>
 					</c:if>	
 			   </tr>    
-        	</c:forEach>                    
-   	
+        	</c:forEach>                       	
 	</tbody>
 </table>	
 

@@ -5,8 +5,9 @@ public class FileDirStrVO {
 	private int id; 
     private String subDir;
     private String name;
-    private String classsno;
+    private String classno;
     private String parentName;
+    private String filePath;
 	private int depth;
     private int fileflag;
     private int parentId;
@@ -15,17 +16,23 @@ public class FileDirStrVO {
     
     
     
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public String getClassno() {
+		return classno;
+	}
+	public void setClassno(String classno) {
+		this.classno = classno;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getClasssno() {
-		return classsno;
-	}
-	public void setClasssno(String classsno) {
-		this.classsno = classsno;
 	}
 
 	public int getId() {
@@ -64,5 +71,6 @@ public class FileDirStrVO {
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
+
 
 }
