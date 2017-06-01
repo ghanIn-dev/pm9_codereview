@@ -237,3 +237,43 @@ BEGIN
 
 RETURN bgcolor_;
 END
+
+
+
+
+
+
+/*
+여기서 부터 codemento를 실행하기 위한 테이
+ */
+
+CREATE TABLE COM_TEST(
+  CLASSNO 	INT(11),				-- 대분류
+  TESTCD 	VARCHAR(10),			-- 코드
+  TESTNM 	VARCHAR(30),			-- 코드명
+  PRIMARY KEY (CLASSNO, TESTCD)
+) ;
+
+
+CREATE TABLE TBL_BOARDFILETEST (
+    FILENO INT(11)  NOT NULL AUTO_INCREMENT, -- 파일 번호
+    BRDNO INT(11),
+    CLASSNO INT(11),                           -- 글번호
+    FILENAME VARCHAR(100),                   -- 파일명
+    REALNAME VARCHAR(30),                    -- 실제파일명
+    FILESIZE INT,                            -- 파일 크기
+    PRIMARY KEY (FILENO)
+);
+
+CREATE TABLE `TBL_FILELIST` (
+  `CLASSNO` int(11) DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `SUBDIR` varchar(30) DEFAULT NULL,
+  `NAME` varchar(1000) DEFAULT NULL,
+  `DEPTH` varchar(30) DEFAULT NULL,
+  `FILEFLAG` varchar(30) DEFAULT NULL,
+  `PARENTID` varchar(30) DEFAULT NULL,
+  `FILEPATH` longtext,
+  `PARENTNAME` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+)

@@ -76,7 +76,7 @@ public class TestSvc {
 		return sqlSession.selectList("selectTestFileList", param);
 	}
 
-	public int insertFileDirVO(FileDirStrVO param) {
+	public int insertFileDirStrVO(FileDirStrVO param) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("insertFileDirStrVO", param);
 	}

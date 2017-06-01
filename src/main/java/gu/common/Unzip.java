@@ -108,7 +108,7 @@ public class Unzip {
 
 	public FileDirStrVO setPara(String path){
 		
-		StringTokenizer st = new StringTokenizer(path,"\\");
+		StringTokenizer st = new StringTokenizer(path,"/");
 		
 		String array[] = new String[st.countTokens()];
 		int i = 0;

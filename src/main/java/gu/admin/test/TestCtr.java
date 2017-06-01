@@ -90,7 +90,7 @@ public class TestCtr {
 				
 				for (int k=0; k<listVO.size(); k ++) {
 					FileDirStrVO listDo = (FileDirStrVO)listVO.get(k);
-					testSvc.insertFileDirVO(listDo);
+					testSvc.insertFileDirStrVO(listDo);
 
 				}
 				
